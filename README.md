@@ -7,7 +7,7 @@ The repository describes how to solve an applied problem on size and biomass of 
 The repository is in a mix of Norwegian and English.
 
 
-## Mapper
+## Folders
 
 Data/ has the data
 
