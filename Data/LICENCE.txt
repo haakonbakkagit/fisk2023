@@ -1,3 +1,5 @@
 ## Data.xlsx
-Data provided by Kontali by email to Haakon at the 13th Jan 2023. 
-No licence agreed, do not reuse.
+Data provided by K by email to Haakon at the 13th Jan 2023. 
+No licence agreed, do not reuse. 
+Permission granted to make the repository (and thus the data) public.
+

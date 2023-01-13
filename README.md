@@ -19,4 +19,12 @@ Scripts-pres/ has the code to generate presentations
 
 Results-pres/ has the output presentations
 
+Static-versions/ see README in folder (if folder exists)
+
+## Getting started
+
+Open MAKE.R and follow instructions. You will need R and RStudio.
+
+If you just want to look at presentations, see Static-versions/. For this you will not need R.
+
 
