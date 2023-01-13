@@ -4,7 +4,7 @@ This Git repository is an example.
 
 The repository describes how to solve an applied problem on size and biomass of fish in a salmon farm.
 
-The repository is in Norwegian.
+The repository is in a mix of Norwegian and English.
 
 
 ## Mapper
