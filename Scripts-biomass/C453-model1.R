@@ -134,7 +134,6 @@ summ$individ.start[1] = df2$Number.of.individuals[1]
 ## Start with all fish being alive
 is.alive = rep(T, length=length(sim.individuals))
 
-stop ( "here")
 
 ## Add all the other months
 for (i.m in 1:12) {
@@ -143,10 +142,14 @@ for (i.m in 1:12) {
   ## Beginning of this month
   ## is.alive are alive
   summ$individ.start[i.m] = sum(sim.individuals[is.alive])
+  summ$biomass.start[i.m] = sum(sim.individuals[is.alive]*
+                                  sim.kg.start[is.alive])
+  
   
   ## Near end of this month
   ## Do growth, before harvest/slaughter
   pre.harvest.kg = sim.kg.start*sim.growth.factor^i.m
+  
   
   ## Harvest
   is.this.harvest = (pre.harvest.kg > harvest.cutoff.kg) & is.alive
@@ -165,14 +168,26 @@ for (i.m in 1:12) {
   
 }
 
-summ
+summ$harvest.kg.per.ind = summ$harvest.biom/summ$harvest.ind
+
+summ$biomass.growth = summ$biomass.start*sim.growth.factor
+
+summ2 = summ
+summ2$individ.start = round(summ2$individ.start)
+summ2$biomass.start = round(summ2$biomass.start)
+summ2$biomass.growth = round(summ2$biomass.growth)
+summ2$harvest.ind = round(summ2$harvest.ind)
+summ2$harvest.biom = round(summ2$harvest.biom)
+summ2$harvest.kg.per.ind = round(summ2$harvest.kg.per.ind, 2)
+
+
+summ2
 
 
 
 ### Improvements ----
 
 #TODO: Maybe: Replace 12 with sim.max.month
-#TODO: Maybe: Make code efficient, the full matrices are not needed
 
 
 ### END ----
