@@ -111,6 +111,13 @@ if (F) {
 
 sim.individuals = individuals
 
+## Create a summary dataframe with results
+sim.summary = data.frame(month=1:12, 
+                         individuals=NA, 
+                         biomass.start=NA, biomass.growth = NA,
+                         harvest.ind=NA, harvest.biom=NA)
+sim.summary$individuals[1] = df2$Number.of.individuals[1]
+
 ## Create two full matrices, for easy summarisation later
 ## Represent dead individuals as 0 kg
 
@@ -127,18 +134,31 @@ sim.kg.ne = matrix(0, ncol=12, nrow=length(sim.individuals))
 for (i.m in 1:12) {
   ## i.m is the month index
   
+  ## Beginning of this month
+  is.alive = (sim.kg.start[, i.m]>0.00001)
+  sim.summary$individuals[i.m] = sum(sim.individuals[is.alive])
+  sim.summary$biomass.start[i.m] = mean(sim.kg.start[, i.m]*sim.individuals*is.alive)
+  
   ## Near end of this month
   ## Do growth (not slaughter)
+  sim.summary$biomass.growth[i.m] = sim.summary$biomass.start*sim.growth.factor
   sim.kg.ne[, i.m] = sim.kg.start[, i.m]*sim.growth.factor
   
   ## Beginning of next month: 
   ## Do slaughter
   sim.kg.start[, i.m+1] = sim.kg.ne[,i.m]
-  sim.kg.start[, i.m+1][sim.kg.start[, i.m+1]>= harvest.cutoff.kg] = 0
+  is.harvest = (sim.kg.start[, i.m+1]>= harvest.cutoff.kg)
   ## Here, slaughtered individuals are represented as 0 kg
+  sim.kg.start[, i.m+1][is.harvest] = 0
+  
+  ## How much biomass got slaughtered?
+  sim.summary$harvest.biom[i.m] = sum(sim.kg.ne[, i.m][is.harvest]*
+    sim.individuals[is.harvest])
+  
   
 }
 
+sim.summary
 
 sim.kg.start[1:5, 1:5]
 sim.kg.ne[1:5, 1:5]
