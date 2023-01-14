@@ -222,6 +222,7 @@ write.xlsx(summ2, file = paste0(folder, filename))
 ### Improvements ----
 
 #TODO: Maybe: Replace 12 with sim.max.month
+#TODO: Maybe: SPlit script in two scripts
 
 
 ### END ----
