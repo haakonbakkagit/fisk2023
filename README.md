@@ -11,13 +11,9 @@ The repository is in a mix of Norwegian and English.
 
 Data/ has the data
 
-Scripts-tech/ has the R code for data cleaning and analysis, including technical reports
+Scripts-biomass/ has the R code for analysing and presenting the biomass data
 
-Results-tech/ has the output of the code in Scripts-tech
-
-Scripts-pres/ has the code to generate presentations
-
-Results-pres/ has the output presentations
+Results-biomass/ has the output of the code in Scripts-biomass
 
 Static-versions/ see README in folder (if folder exists)
 

@@ -1,0 +1,80 @@
+---
+title: "Visualisering av data"
+format: 
+  html:
+    toc: true
+    toc-depth: 2
+    toc-location: right
+    code-fold: true
+    code-summary: "Vis kode"
+    number-sections: true
+execute:
+  warning: true 
+  echo: true
+---
+
+## Om dokumentet
+
+Her visualiserer vi rådataene, for å se om det er noen overraskelser.
+
+Teknisk dokument. 10 min work.
+
+```{r, warning=FALSE, message=FALSE}
+library(openxlsx)
+
+```
+
+
+## Load data
+```{r}
+file1 = "../Data/Data.xlsx"
+stopifnot(file.exists(file1))
+df1=read.xlsx(file1, sheet=1)
+df2=read.xlsx(file1, sheet=2)
+```
+
+
+
+
+
+## df1: Table 1
+
+```{r}
+str(df1)
+```
+
+```{r}
+plot(df1$Average.weight, df1$`std.(σ)`, ylim=range(c(df1$`std.(σ)`, 0)))
+```
+
+### Discussion
+
+This does not look right. We proceed with it anyway.
+
+
+## df2: Table 2
+```{r}
+str(df2)
+```
+
+```{r}
+plot(1:12, df2$Number.of.individuals)
+```
+
+```{r}
+plot(1:12, df2$Biomass)
+```
+
+
+```{r}
+plot(1:12, df2$Biomass/df2$Number.of.individuals)
+```
+
+### Discussion
+
+Looks OK.
+
+
+## End
+
+
