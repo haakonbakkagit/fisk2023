@@ -11,17 +11,17 @@
 
 ## Working directory
 # The code assumes that you run it from the root folder of the repository
-stopifnot(file.exists("hi"))
+stopifnot(file.exists("MAKE.R"))
 
-## Run scripts ----
-# Delete all variables between each script to make sure they are independent
+### Run scripts ----
+
+## Delete all variables between each script to make sure they are independent
+rm(list=ls())
+source("Scripts-biomass/C452-data-clean.R", encoding = "UTF-8")
 
 rm(list=ls())
 
-
-rm(list=ls())
-
-## End ----
+### End ----
 print("Make ran successfully!")
 
 

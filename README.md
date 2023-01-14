@@ -13,7 +13,7 @@ Data/ has the data
 
 Scripts-biomass/ has the R code for analysing and presenting the biomass data
 
-Results-biomass/ has the output of the code in Scripts-biomass
+Results-biomass/ has the output of the code in Scripts-biomass. This folder can be deleted at any time and recreated with the MAKE file.
 
 Static-versions/ see README in folder (if folder exists)
 
