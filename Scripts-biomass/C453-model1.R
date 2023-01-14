@@ -161,7 +161,7 @@ for (i.m in 1:12) {
 
 summ$harvest.kg.per.ind = summ$harvest.biom/summ$harvest.ind
 
-summ$biomass.growth = summ$biomass.start*sim.growth.factor
+summ$biomass.growth = summ$biomass.start*(sim.growth.factor-1)
 
 summ2 = summ
 summ2$individ.start = round(summ2$individ.start)
@@ -172,8 +172,9 @@ summ2$harvest.biom = round(summ2$harvest.biom)
 summ2$harvest.kg.per.ind = round(summ2$harvest.kg.per.ind, 2)
 
 
-summ2
+summ2 = summ2[, c(1:2, 5, 7, 3:4, 6)]
 
+summ2
 
 
 ### Improvements ----
