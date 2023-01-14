@@ -118,18 +118,8 @@ summ = data.frame(month=1:12,
                          individ.start=NA, 
                          biomass.start=NA, biomass.growth = NA,
                          harvest.ind=NA, harvest.biom=NA)
-summ$individ.start[1] = df2$Number.of.individuals[1]
+# check summ$individ.start[1] = df2$Number.of.individuals[1]
 
-## Create two full matrices, for easy summarisation later
-## Represent dead individuals as 0 kg
-
-## Simulation number of individuals at start of month 
-## (after slaughter)
-#sim.kg.start = matrix(0, ncol=12+1, nrow=length(sim.individuals))
-#sim.kg.start[, 1] = sim.kg.start
-## Simulation number of individuals near the end of month
-## (just before slaughter)
-#sim.kg.ne = matrix(0, ncol=12, nrow=length(sim.individuals))
 
 ## Start with all fish being alive
 is.alive = rep(T, length=length(sim.individuals))
@@ -143,7 +133,8 @@ for (i.m in 1:12) {
   ## is.alive are alive
   summ$individ.start[i.m] = sum(sim.individuals[is.alive])
   summ$biomass.start[i.m] = sum(sim.individuals[is.alive]*
-                                  sim.kg.start[is.alive])
+                                  sim.kg.start[is.alive]*
+                                  sim.growth.factor^i.m)
   
   
   ## Near end of this month
