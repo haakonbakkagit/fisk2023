@@ -57,15 +57,16 @@ for (i.row in 1:nrow(df2)) {
 
 ## Average weight of harvestable fish:
 ##TODO: ISSUE: This could be unstable for biomass close to cutoff!!
-df2$exp.biom/df2$perc.above.cut
+df2$harvest.kg.per.ind = df2$exp.biom/df2$perc.above.cut
 
 ## Total harvestable biomass
-df2$exp.biom*df2$Number.of.individuals
+df2$harvest.kg = df2$exp.biom*df2$Number.of.individuals
 
 ## Percent of biomass that will be harvested
-round(df2$exp.biom*df2$Number.of.individuals/df2$Biomass, 2)*100
+df2$harvest.percent.kg = round(df2$harvest.kg/df2$Biomass*100, 0)
 
-
+## Add individuals slaughtered
+df2$harvest.ind = df2$perc.above.cut * df2$Number.of.individuals
 
 if (F) {
   ## Test
@@ -207,6 +208,15 @@ if (F) {
   intgr3$value*summ2$individ.start[12]
 
 }
+
+### Save results ----
+folder = "../Results-biomass/"
+
+filename="C453-harvest-df2.xlsx"
+write.xlsx(df2, file = paste0(folder, filename))
+
+filename="C453-harvest-sim.xlsx"
+write.xlsx(summ2, file = paste0(folder, filename))
 
 
 ### Improvements ----
