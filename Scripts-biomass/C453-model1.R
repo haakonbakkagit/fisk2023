@@ -21,6 +21,9 @@ harvest.cutoff.kg = 4
 n.sim.disc.bins = 1000
 # - Higher -> more accurate
 # - Lower -> faster
+## How fast do the fisg grow in the simulation?
+sim.growth.factor = 0.112
+# - Recommended: 11.2% -> 0.112
 
 ## Question 0 and 1 ----
 # total harvestable biomass (fish larger than 4kg) for these months?
@@ -79,6 +82,12 @@ if (F) {
 ## be harvested during the next 12 months, if we assume that all fish over 4kg 
 ## will be harvested at the end of each month?
 
+## ASSUMPTION: Every individual grows with exactly 11.2%
+## Unrealistic, but maybe good approximation
+
+## TODO NOTE: This will not be consistent with df1!
+
+
 ## Values of initial time point
 mean = df2$Biom.per.ind[1]
 sd = df2$Biom.sd.from.df1[1]
@@ -100,13 +109,19 @@ if (F) {
   plot(kg.vals, individuals)
 }
 
-## MAYBE: DO two full matrices, for easy summarisation
+sim.individuals = individuals
 
+## Create two full matrices, for easy summarisation later
+## Represent dead individuals as 0 kg
 
-## Initial month
-sim = cbind(kg.vals, ind.m1.start = individuals)
-df3 = data.frame(month=0, ind.start = sum(sim$ind.m1.start))
-## Note: df3 will not be consistent with df1!
+## Simulation number of individuals at start of month 
+## (after slaughter)
+sim.kg.start = matrix(0, ncol=12+1, nrow=length(sim.individuals))
+sim.kg.start[, 1] = kg.vals
+## Simulation number of individuals near the end of month
+## (just before slaughter)
+sim.kg.ne = matrix(0, ncol=12, nrow=length(sim.individuals))
+
 
 ## Add all the other months
 for (i.m in 1:12) {
@@ -114,20 +129,25 @@ for (i.m in 1:12) {
   
   ## Near end of this month
   ## Do growth (not slaughter)
+  sim.kg.ne[, i.m] = sim.kg.start[, i.m]*sim.growth.factor
   
   ## Beginning of next month: 
   ## Do slaughter
+  sim.kg.start[, i.m+1] = sim.kg.ne[,i.m]
+  sim.kg.start[, i.m+1][sim.kg.start[, i.m+1]>= harvest.cutoff.kg] = 0
+  ## Here, slaughtered individuals are represented as 0 kg
   
 }
 
 
-local.addmonth = function(sim) {
-  ## This function adds one month to the sim dataframe
-  
-}
+sim.kg.start[1:5, 1:5]
+sim.kg.ne[1:5, 1:5]
 
 
+### Improvements ----
 
+#TODO: Maybe: Replace 12 with sim.max.month
+#TODO: Maybe: Make code efficient, the full matrices are not needed
 
 
 ### END ----
