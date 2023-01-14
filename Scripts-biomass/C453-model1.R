@@ -31,15 +31,34 @@ local.dnorm = function(x) dnorm(x, mean, sd)
 local.xdnorm = function(x) x*dnorm(x, mean, sd)
 
 df2$perc.above.cut = NA
+df2$exp.biom = NA
 
 for (i.row in 1:nrow(df2)) {
   mean = df2$Biom.per.ind[i.row]
   sd = df2$Biom.sd.from.df1[i.row]
-  ## compute the integral
-  intgr = integrate(local.dnorm, lower=harvest.cutoff.kg, upper=mean+10*sd)
+  ## Compute the integral to get probability of picking 1 slaughter ind
+  intgr1 = integrate(local.dnorm, lower=harvest.cutoff.kg, upper=mean+10*sd)
   stopifnot(intgr$abs.error < 0.01)
-  df2$perc.above.cut[i.row] = intgr$value
+  df2$perc.above.cut[i.row] = intgr1$value
+  ## Integral for expected slaughter biomass for 1 pick
+  intgr2 = integrate(local.xdnorm, lower=harvest.cutoff.kg, upper=mean+10*sd)
+  stopifnot(intgr$abs.error < 1)
+  df2$exp.biom[i.row] = intgr2$value
 }
+
+
+
+## Average weight of harvestable fish:
+##TODO: ISSUE: This could be unstable for biomass close to cutoff!!
+df2$exp.biom/df2$perc.above.cut
+
+## Total harvestable biomass
+df2$exp.biom*df2$Number.of.individuals
+
+## Percent of biomass that will be harvested
+df2$exp.biom*df2$Number.of.individuals/df2$Biomass
+
+
 
 if (F) {
   ## Test
