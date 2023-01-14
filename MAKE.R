@@ -17,9 +17,16 @@ stopifnot(file.exists("MAKE.R"))
 
 ## Delete all variables between each script to make sure they are independent
 rm(list=ls())
-source("Scripts-biomass/C452-data-clean.R", encoding = "UTF-8")
+setwd("Scripts-biomass")
+source("C452-data-clean.R", encoding = "UTF-8")
 
 rm(list=ls())
+
+rmarkdown::render("C451-data-visual.Qmd", 
+                  output_file="C451-data-visual.html",
+                  output_dir = "../Results-biomass/")
+
+if (!file.exists("MAKE.R")) setwd("../")
 
 ### End ----
 print("Make ran successfully!")
