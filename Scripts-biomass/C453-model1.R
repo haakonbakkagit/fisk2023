@@ -118,7 +118,6 @@ summ = data.frame(month=1:12,
                          individ.start=NA, 
                          biomass.start=NA, biomass.growth = NA,
                          harvest.ind=NA, harvest.biom=NA)
-# check summ$individ.start[1] = df2$Number.of.individuals[1]
 
 
 ## Start with all fish being alive
@@ -159,6 +158,14 @@ for (i.m in 1:12) {
   
 }
 
+if (F) {
+  ## Check
+  summ$individ.start[1]
+  ## should equal
+  df2$Number.of.individuals[1]
+}
+
+
 summ$harvest.kg.per.ind = summ$harvest.biom/summ$harvest.ind
 
 summ$biomass.growth = summ$biomass.start*(sim.growth.factor-1)
@@ -175,6 +182,31 @@ summ2$harvest.kg.per.ind = round(summ2$harvest.kg.per.ind, 2)
 summ2 = summ2[, c(1:2, 5, 7, 3:4, 6)]
 
 summ2
+
+if (F) {
+  # test
+  summ2$biomass.start + summ2$biomass.growth - summ2$harvest.biom
+  # should approximately equal
+  summ2$biomass.start[-1]
+}
+
+if (F) {
+  ## Alternative
+  mean1 = df2$Biom.per.ind[i.row]
+  sd1 = df2$Biom.sd.from.df1[i.row]
+  local.xkdnorm = function(x) x*dnorm(x, mean1, sd1)*sim.growth.factor^i.m
+  
+  i.m=12
+  intgr3 = integrate(local.xkdnorm, 
+                     lower=harvest.cutoff.kg*sim.growth.factor^(-i.m), 
+                     upper=harvest.cutoff.kg*sim.growth.factor^(-i.m+1))
+  ## with special case at i.m=1
+  
+  ## but then this must be used in the correct way!!
+  ## not quite right:
+  intgr3$value*summ2$individ.start[12]
+
+}
 
 
 ### Improvements ----
