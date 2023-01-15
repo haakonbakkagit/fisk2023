@@ -13,7 +13,7 @@ df1=read.xlsx(file1, sheet=1)
 file2 = "../Results-biomass/C452-df2-transf.xlsx"
 df2=read.xlsx(file2, sheet=1)
 
-### INPUT Constants
+### INPUT Constants ----
 # Feel free to change these and rerun the code
 harvest.cutoff.kg = 4
 # - Recommended value: 4
@@ -28,8 +28,8 @@ sim.growth.factor = 1.112
 ## Question 0 and 1 ----
 # total harvestable biomass (fish larger than 4kg) for these months?
 
-## Decision: Use the correct mean instead of the rounded
 ## Percentage above cutoff value
+## Decision: Use the correct mean instead of the rounded
 perc.above.cut0 = 1 - pnorm(harvest.cutoff.kg, mean=df2$Biom.per.ind, 
                                sd = df2$Biom.sd.from.df1)
 
@@ -78,7 +78,7 @@ if (F) {
 
 
 ## Question 2 ----
-# Assuming you only know the biomass and number of individuals at the start of 
+## Assuming you only know the biomass and number of individuals at the start of 
 ## the first month (from Table 2). Assume a growth rate of 11,2%. How much will 
 ## be harvested during the next 12 months, if we assume that all fish over 4kg 
 ## will be harvested at the end of each month?
@@ -86,7 +86,7 @@ if (F) {
 ## ASSUMPTION: Every individual grows with exactly 11.2%
 ## Unrealistic, but maybe good approximation
 
-## TODO NOTE: This will not be consistent with df1!
+## NOTE: This will not be consistent with df1!
 
 
 ## Values of initial time point
@@ -144,7 +144,7 @@ for (i.m in 1:12) {
   
   ## Harvest
   is.this.harvest = (pre.harvest.kg > harvest.cutoff.kg) & is.alive
-  num.xgrid = sum(is.this.harvest)
+  # num.xgrid = sum(is.this.harvest)
   
   summ$harvest.ind[i.m] = sum(sim.individuals[is.this.harvest])
   
