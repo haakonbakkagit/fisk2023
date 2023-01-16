@@ -22,6 +22,10 @@ source("C452-data-clean.R", encoding = "UTF-8")
 
 rm(list=ls())
 
+source("C453-model1.R", encoding = "UTF-8")
+
+rm(list=ls())
+
 rmarkdown::render("C451-data-visual.Qmd", 
                   output_file="C451-data-visual.html",
                   output_dir = "../Results-biomass/")
