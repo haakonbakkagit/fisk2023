@@ -3,6 +3,7 @@
 # We also transform the data! (NB!!)
 
 stopifnot(file.exists("C452-data-clean.R"))
+library(openxlsx)
 
 ## Load data ----
 
