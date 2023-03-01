@@ -135,7 +135,7 @@ for (i.m in 1:12) {
   summ$biomass.start[i.m] = sum(sim.individuals[is.alive]*
                                   sim.kg.start[is.alive]*
                                   sim.growth.factor^i.m)
-  
+  ## is .start incorrect interpretation?
   
   ## Near end of this month
   ## Do growth, before harvest/slaughter
